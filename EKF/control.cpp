@@ -521,8 +521,7 @@ void Ekf::controlGpsFusion()
 
 			// calculate observation process noise
 			float lower_limit = fmaxf(_params.gps_pos_noise, 0.01f);
-			float upper_limit = fmaxf(_params.pos_noaid_noise, lower_limit);
-			_posObsNoiseNE = math::constrain(_gps_sample_delayed.hacc, lower_limit, upper_limit);
+			_posObsNoiseNE = fmaxf(_gps_sample_delayed.hacc, lower_limit);
 
 			// calculate innovations
 			_vel_pos_innov[3] = _state.pos(0) - _gps_sample_delayed.pos(0);
